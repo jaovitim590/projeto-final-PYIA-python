@@ -3,7 +3,7 @@ import mysql.connector
 def get_db():
     return mysql.connector.connect(
         host="yamanote.proxy.rlwy.net",
-        port=15391,  # <- PORTA CORRETA DO SEU RAILWAY
+        port=15391,
         user="root",
         password="xXWPHqoWAWEdQMXbBfJQsfJxSHyGCSGY",
         database="railway"

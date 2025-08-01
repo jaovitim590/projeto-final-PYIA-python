@@ -1,28 +1,30 @@
+from decimal import Decimal
 from sql.db import get_db
 import mysql.connector
 
 def listar(tabela: str):
-
     tabelas_validas = ("produtos", "vendas")
 
     if tabela not in tabelas_validas:
-          print("Tabela inválida")
-          return
+        return {"erro": "Tabela inválida"}
+
     try:
         conn = get_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
 
-        sql = f"""
-          SELECT * FROM {tabela}
-        """
-
+        sql = f"SELECT * FROM {tabela}"
         cursor.execute(sql)
         resultados = cursor.fetchall()
-        for linha in resultados:
-            print(linha)
+
+        # Converter campos Decimal para float
+        for item in resultados:
+            if 'preco' in item and isinstance(item['preco'], Decimal):
+                item['preco'] = float(item['preco'])
+
+        return resultados
 
     except mysql.connector.Error as err:
-        print(f"❌ Erro ao listar os conteudos da tabela {tabela}: {err}")
+        return {"erro": f"Erro ao listar os dados: {err}"}
 
     finally:
         if 'cursor' in locals():
