@@ -1,6 +1,6 @@
 CREATE TABLE produtos(
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  nome VARCHAR(255) NOT NULL,
+  nome VARCHAR(255) NOT NULL UNIQUE,
   descricao TEXT NOT NULL,
   quantidade INT NOT NULL CHECK  (quantidade >= 0),
   preco DECIMAL(10,2) NOT NULL CHECK (preco >= 0)
