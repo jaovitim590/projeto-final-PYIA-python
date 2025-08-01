@@ -2,30 +2,27 @@ import mysql.connector
 
 def get_db():
     return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="in12345678",
-            database="estoque"
-        )
+        host="yamanote.proxy.rlwy.net",
+        port=15391,  # <- PORTA CORRETA DO SEU RAILWAY
+        user="root",
+        password="xXWPHqoWAWEdQMXbBfJQsfJxSHyGCSGY",
+        database="railway"
+    )
 
 if __name__ == "__main__":
     conn = get_db()
-    print("CONECTADO!")
+    print("✅ CONECTADO COM SUCESSO!")
 
     cursor = conn.cursor()
 
-    with open('./sql/dump.sql', 'r') as file:
+    with open('./sql/dump.sql', 'r', encoding='utf-8') as file:
         sql = file.read()
 
-    comandos = sql.split(";")
-    
-    for comando in comandos:
-        comando = comando.strip()
-        if comando:
-            cursor.execute(comando)
+    for result in cursor.execute(sql, multi=True):
+        pass
 
     conn.commit()
     cursor.close()
     conn.close()
 
-    print("DUMB EXECUTADO COM SUCESSO!")
+    print("✅ DUMP EXECUTADO COM SUCESSO!")
