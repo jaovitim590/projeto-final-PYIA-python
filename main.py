@@ -7,28 +7,42 @@ from acoes.vendas import add_venda
 from acoes.update import atualizar
 
 class Estoque:
-  def __init__(self):
-    tabelas = ("produtos", "vendas")
+    def __init__(self):
+        self.tabelas = ("produtos", "vendas")
 
-  def adicionar_produto(self,nome: str, descricao: str, quantidade: int = 0, preco: float = 0):
-    return add_produto(nome,descricao,quantidade,preco)
-  
-  def list(self,tabela:str):
-    if tabela in tabelas:
-      return listar(tabela)
-    else:
-      return "insira uma tabela valida!"
+    def adicionar_produto(self, nome: str, descricao: str, quantidade: int = 0, preco: float = 0):
+        return add_produto(nome, descricao, quantidade, preco)
 
-  def adicionar_venda(self):
-    listar_id("produtos")
-    try:
-        id_produto = int(input("insira o ID do produto que deseja comprar: "))
-        quantidade = int(input("insira a quantidade que deseja comprar: "))
-        data_feita = date(input("insira a data da compra: (YYYY,M,D)"))
-    except err:
-      print("valores inseridos incorretamente!")
-      break
-    
-    finally:
-      return add_venda(id_produto, quantidade,data_feita)
-  
+    def list(self, tabela: str):
+        if tabela in self.tabelas:
+            return listar(tabela)
+        else:
+            return "Insira uma tabela válida!"
+
+    def adicionar_venda(self):
+        listar_id("produtos")
+        try:
+            id_produto = int(input("Insira o ID do produto que deseja comprar: "))
+            quantidade = int(input("Insira a quantidade que deseja comprar: "))
+            ano, mes, dia = map(int, input("Insira a data da compra (YYYY,M,D): ").split(","))
+            data_feita = date(ano, mes, dia)
+        except Exception as err:
+            print(f"❌ Valores inseridos incorretamente: {err}")
+            return
+
+        return add_venda(id_produto, quantidade, data_feita)
+
+    def drop_produto(self, key: str, tabela: str):
+        if tabela in self.tabelas:
+            return remover(key, tabela)
+        else:
+            return "Insira uma tabela válida!"
+
+    def atualizar_quantia(self, tabela: str):
+      if tabela in self.tabelas:
+            return atualizar(tabela)
+      else:
+            return "Insira uma tabela válida!"
+
+loja = Estoque()
+loja.atualizar_quantia("produtos")

@@ -6,14 +6,15 @@ def listar_id(tabela: str):
     tabelas_validas = ("produtos", "vendas")
 
     if tabela not in tabelas_validas:
-          print("Tabela inválida")
-          return
+        print("Tabela inválida")
+        return
+
     try:
         conn = get_db()
         cursor = conn.cursor()
 
         sql = f"""
-          SELECT id, nome FROM {tabela}
+          SELECT id, nome FROM {tabela} ORDER BY id ASC
         """
 
         cursor.execute(sql)
