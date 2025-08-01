@@ -28,3 +28,4 @@ def add_venda(id_produto: int, quantidade: int, data_feita: date ):
           cursor.close()
       if 'conn' in locals() and conn.is_connected():
           conn.close()
+
