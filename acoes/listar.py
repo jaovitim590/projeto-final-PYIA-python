@@ -15,8 +15,7 @@ def listar(tabela: str):
         sql = f"SELECT * FROM {tabela}"
         cursor.execute(sql)
         resultados = cursor.fetchall()
-
-        # Converter campos Decimal para float
+        
         for item in resultados:
             if 'preco' in item and isinstance(item['preco'], Decimal):
                 item['preco'] = float(item['preco'])
