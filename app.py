@@ -6,6 +6,8 @@ from acoes.produtos import add_produto
 from acoes.vendas import add_venda
 from acoes.listar import listar
 from datetime import datetime
+import os
+
 
 app = Flask(__name__)
 CORS(app)
@@ -101,4 +103,5 @@ def remover_produto():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
